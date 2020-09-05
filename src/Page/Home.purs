@@ -3,12 +3,14 @@ module Page.Home where
 import Prelude
 import Capability.Navigate (class Navigate)
 import Capability.Random (class Random, rand)
+import Component.HTML.Utils as HU
 import Component.Link (link)
 import Control.Monad.Reader (class MonadAsk, asks)
 import Data.Maybe (Maybe(..))
 import Data.Route (Route(..))
 import Halogen as H
 import Halogen.HTML as HH
+import Tailwind as TW
 
 data Action
   = Initialize
@@ -34,7 +36,7 @@ component =
   initialState = const { message: "", number: 0 }
 
   render { message, number } =
-    HH.div_
+    HH.div [ HU.tw [ TW.m1 ] ]
       [ HH.div_ [ HH.text "Hello" ]
       , HH.div_ [ HH.text message ]
       , HH.div_ [ HH.text $ "Random number: " <> show number ]

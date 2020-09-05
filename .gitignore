@@ -11,3 +11,7 @@
 /.purs*
 /.psa*
 /.spago
+
+# Tailwind
+/dev/styles.css
+/src/Tailwind.purs
