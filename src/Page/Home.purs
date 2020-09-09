@@ -1,8 +1,9 @@
 module Page.Home where
 
 import Prelude
+import Capability.Navigate (class Navigate)
 import Capability.Random (class Random, rand)
-import Component.HTML.Utils as HPU
+import Component.Link (link)
 import Control.Monad.Reader (class MonadAsk, asks)
 import Data.Maybe (Maybe(..))
 import Data.Route (Route(..))
@@ -15,6 +16,7 @@ data Action
 component ::
   forall query r m.
   MonadAsk { globalMessage :: String | r } m =>
+  Navigate m =>
   Random m =>
   H.Component HH.HTML query Unit Void m
 component =
@@ -36,7 +38,7 @@ component =
       [ HH.div_ [ HH.text "Hello" ]
       , HH.div_ [ HH.text message ]
       , HH.div_ [ HH.text $ "Random number: " <> show number ]
-      , HH.div_ [ HH.a [ HPU.href About ] [ HH.text "about" ] ]
+      , HH.div_ [ link About [ HH.text "about" ] ]
       ]
 
   handleAction = case _ of

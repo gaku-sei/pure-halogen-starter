@@ -4,20 +4,20 @@ import Prelude
 import Capability.Navigate (class Navigate, navigate)
 import Capability.Random (class Random)
 import Component.HTML.NotFound (notFound)
-import Control.Monad.Reader (class MonadAsk)
+import Control.Monad.Reader (class MonadAsk, asks)
 import Data.Either (hush)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Route (Route(..), routeCodec)
 import Data.Symbol (SProxy(..))
 import Effect.Class (class MonadEffect)
 import Env (Env)
+import Foreign (unsafeToForeign)
 import Halogen (liftEffect)
 import Halogen as H
 import Halogen.HTML as HH
 import Page.About as About
 import Page.Home as Home
 import Routing.Duplex (parse)
-import Routing.Hash (getHash)
 
 type State
   = { route :: Maybe Route
@@ -59,8 +59,10 @@ component =
 
   handleAction = case _ of
     Initialize -> do
-      initialRoute <- hush <<< (parse routeCodec) <$> liftEffect getHash
-      navigate $ fromMaybe Home initialRoute
+      path <- asks _.nav >>= liftEffect <<< _.locationState <#> _.path
+      let
+        newPath = fromMaybe Home $ hush $ parse routeCodec path
+      navigate newPath $ unsafeToForeign {}
 
   handleQuery :: forall slots a. Query a -> H.HalogenM State Action slots Void m (Maybe a)
   handleQuery = case _ of

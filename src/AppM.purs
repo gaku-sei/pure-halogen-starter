@@ -12,7 +12,6 @@ import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Random (randomInt)
 import Env (Env)
 import Routing.Duplex (print)
-import Routing.Hash (setHash)
 import Type.Equality (class TypeEquals, from)
 
 newtype AppM a
@@ -41,7 +40,9 @@ runAppM :: Env -> AppM ~> Aff
 runAppM env (AppM m) = runReaderT m env
 
 instance randomAppM :: Random AppM where
-  rand x = liftEffect <<< randomInt x
+  rand min = liftEffect <<< randomInt min
 
 instance navigateAppM :: Navigate AppM where
-  navigate = liftEffect <<< setHash <<< print routeCodec
+  navigate route state = do
+    nav <- asks _.nav
+    liftEffect $ nav.pushState state $ print routeCodec route

@@ -12,18 +12,19 @@ import Halogen as H
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
 import Routing.Duplex (parse)
-import Routing.Hash (matchesWith)
+import Routing.PushState (makeInterface, matchesWith)
 
 main :: Effect Unit
 main =
   HA.runHalogenAff do
-    body <- HA.awaitBody
+    nav <- liftEffect makeInterface
     let
-      env = { globalMessage: "Hello from the Env!" }
-
-      rootComponent = H.hoist (runAppM env) Router.component
-    halogenIO <- runUI rootComponent unit body
-    void $ liftEffect
-      $ matchesWith (parse routeCodec) \old new -> do
+      rootComponent =
+        H.hoist
+          (runAppM { globalMessage: "Hello from the Env!", nav })
+          Router.component
+    halogenIO <- HA.awaitBody >>= runUI rootComponent unit
+    liftEffect $ nav
+      # matchesWith (parse routeCodec) \old new ->
           when (old /= Just new) do
             launchAff_ $ halogenIO.query $ H.tell $ Router.Navigate new
