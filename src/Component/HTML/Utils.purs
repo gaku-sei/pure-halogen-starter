@@ -6,4 +6,4 @@ import Halogen.HTML.Properties as HP
 import Routing.Duplex (print)
 
 href :: forall r i. Route -> HP.IProp ( href ∷ String | r ) i
-href = HP.href <<< append "#" <<< print routeCodec
+href = HP.href <<< print routeCodec
