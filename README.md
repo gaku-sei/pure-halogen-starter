@@ -8,7 +8,5 @@ It contains only a couple of pages, but also implements the [capability pattern]
 
 Here are some of the incoming features:
 
-- Hashless navigation
-- Tailwind css
 - An example using GraphQL
 - ...
