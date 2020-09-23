@@ -59,7 +59,7 @@ component =
 
   handleAction = case _ of
     Initialize -> do
-      path <- asks _.nav >>= liftEffect <<< _.locationState <#> _.path
+      path <- _.path <$> (liftEffect <<< _.locationState =<< asks _.nav)
       let
         newPath = fromMaybe Home $ hush $ parse routeCodec path
       navigate newPath $ unsafeToForeign {}

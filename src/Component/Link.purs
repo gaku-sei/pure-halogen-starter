@@ -48,7 +48,8 @@ component =
 link ::
   forall action query slots r m.
   Navigate m =>
+  String ->
   Route ->
   Array (HH.HTML (H.ComponentSlot HH.HTML slots m Action) Action) ->
   HH.HTML (H.ComponentSlot HH.HTML ( link :: H.Slot query Void String | r ) m action) action
-link route elements = HH.slot (SProxy :: SProxy "link") "link" component { route, elements } absurd
+link key route elements = HH.slot (SProxy :: _ "link") key component { route, elements } absurd

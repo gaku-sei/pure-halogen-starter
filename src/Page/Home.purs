@@ -40,8 +40,10 @@ component =
       [ HH.div_ [ HH.text "Hello" ]
       , HH.div_ [ HH.text message ]
       , HH.div_ [ HH.text $ "Random number: " <> show number ]
-      , HH.div_ [ link About [ HH.text "about" ] ]
+      , HH.div_ [ link "about" About [ HH.text "about" ] ]
       ]
 
   handleAction = case _ of
-    Initialize -> H.put =<< { message: _, number: _ } <$> asks _.globalMessage <*> rand 0 100
+    Initialize ->
+      { message: _, number: _ } <$> asks _.globalMessage <*> rand 0 100
+        >>= H.put
