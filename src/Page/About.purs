@@ -18,5 +18,5 @@ component =
   render _state =
     HH.div_
       [ HH.div_ [ HH.text "About page" ]
-      , HH.div_ [ link Home [ HH.text "home" ] ]
+      , HH.div_ [ link "home" Home [ HH.text "home" ] ]
       ]
