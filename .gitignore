@@ -12,6 +12,9 @@
 /.psa*
 /.spago
 
+# GraphQL
+/src/Api
+
 # Tailwind
 /dev/styles.css
 /src/Tailwind.purs

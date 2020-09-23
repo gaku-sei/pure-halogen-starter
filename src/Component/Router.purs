@@ -1,6 +1,7 @@
 module Component.Router where
 
 import Prelude
+import Capability.Countries (class Countries)
 import Capability.Navigate (class Navigate, navigate)
 import Capability.Random (class Random)
 import Component.HTML.NotFound (notFound)
@@ -16,6 +17,7 @@ import Halogen (liftEffect)
 import Halogen as H
 import Halogen.HTML as HH
 import Page.About as About
+import Page.Countries as Countries
 import Page.Home as Home
 import Routing.Duplex (parse)
 
@@ -35,6 +37,7 @@ component ::
   MonadAsk Env m =>
   Random m =>
   Navigate m =>
+  Countries m =>
   H.Component HH.HTML Query Unit Void m
 component =
   H.mkComponent
@@ -56,6 +59,7 @@ component =
       # maybe notFound case _ of
           Home -> HH.slot (SProxy :: _ "home") unit Home.component unit absurd
           About -> HH.slot (SProxy :: _ "about") unit About.component unit absurd
+          Countries -> HH.slot (SProxy :: _ "countries") unit Countries.component unit absurd
 
   handleAction = case _ of
     Initialize -> do

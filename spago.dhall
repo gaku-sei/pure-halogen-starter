@@ -7,6 +7,8 @@
   , "random"
   , "routing"
   , "routing-duplex"
+  , "node-process"
+  , "purescript-graphql-client"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

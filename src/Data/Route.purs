@@ -10,6 +10,7 @@ import Routing.Duplex.Generic.Syntax ((/))
 data Route
   = Home
   | About
+  | Countries
 
 derive instance genericRoute :: Generic Route _
 
@@ -24,4 +25,5 @@ routeCodec =
     $ sum
         { "Home": noArgs
         , "About": "about" / noArgs
+        , "Countries": "countries" / noArgs
         }

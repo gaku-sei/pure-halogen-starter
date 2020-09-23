@@ -3,6 +3,7 @@ module Env where
 import Routing.PushState (PushStateInterface)
 
 type Env
-  = { globalMessage :: String
+  = { apiUrl :: String
+    , globalMessage :: String
     , nav :: PushStateInterface
     }

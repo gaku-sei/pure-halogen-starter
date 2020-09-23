@@ -1,16 +1,23 @@
 module AppM where
 
 import Prelude
+import Api.Object.Country as Country
+import Api.Object.Language as Language
+import Api.Query as Query
+import Capability.Countries (class Countries)
+import Capability.GraphQL (class GraphQL, query)
 import Capability.Navigate (class Navigate)
 import Capability.Random (class Random)
 import Control.Monad.Reader (class MonadAsk, ReaderT, asks, runReaderT)
+import Data.Either (either)
 import Data.Newtype (class Newtype)
 import Data.Route (routeCodec)
 import Effect.Aff (Aff)
-import Effect.Aff.Class (class MonadAff)
+import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Random (randomInt)
 import Env (Env)
+import GraphQLClient (defaultInput, defaultRequestOptions, graphqlMutationRequest, graphqlQueryRequest)
 import Routing.Duplex (print)
 import Type.Equality (class TypeEquals, from)
 
@@ -46,3 +53,22 @@ instance navigateAppM :: Navigate AppM where
   navigate route state = do
     nav <- asks _.nav
     liftEffect $ nav.pushState state $ print routeCodec route
+
+instance graphQLAppM :: GraphQL AppM where
+  query q = do
+    apiUrl <- asks _.apiUrl
+    liftAff $ graphqlQueryRequest apiUrl defaultRequestOptions q
+  mutation m = do
+    apiUrl <- asks _.apiUrl
+    liftAff $ graphqlMutationRequest apiUrl defaultRequestOptions m
+
+instance countriesAppM :: Countries AppM where
+  getCountries = either (const []) identity <$> query countries
+    where
+    countries = Query.countries defaultInput countrySelection
+
+    countrySelection =
+      { code: _, name: _, languages: _ }
+        <$> Country.code
+        <*> Country.name
+        <*> Country.languages Language.name
