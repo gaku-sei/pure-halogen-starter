@@ -3,6 +3,7 @@ module Page.Home where
 import Prelude
 import Capability.Navigate (class Navigate)
 import Capability.Random (class Random, rand)
+import Capability.Countries (class Countries)
 import Component.HTML.Utils as HU
 import Component.Link (link)
 import Control.Monad.Reader (class MonadAsk, asks)
@@ -40,7 +41,16 @@ component =
       [ HH.div_ [ HH.text "Hello" ]
       , HH.div_ [ HH.text message ]
       , HH.div_ [ HH.text $ "Random number: " <> show number ]
-      , HH.div_ [ link "about" About [ HH.text "about" ] ]
+      , HH.div_
+          [ link "countries" Countries
+              [ HH.span [ HU.tw [ TW.underline, TW.textBlue500 ] ] [ HH.text "Countries" ]
+              ]
+          ]
+      , HH.div_
+          [ link "about" About
+              [ HH.span [ HU.tw [ TW.underline, TW.textBlue500 ] ] [ HH.text "About" ]
+              ]
+          ]
       ]
 
   handleAction = case _ of

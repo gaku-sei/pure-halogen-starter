@@ -8,5 +8,5 @@ It contains only a couple of pages, but also implements the [capability pattern]
 
 Here are some of the incoming features:
 
-- An example using GraphQL
+- Usage with .env files
 - ...

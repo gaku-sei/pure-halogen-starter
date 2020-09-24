@@ -119,10 +119,77 @@ let additions =
 
 
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200831/packages.dhall sha256:cdb3529cac2cd8dd780f07c80fd907d5faceae7decfcaa11a12037df68812c83
+      https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200922/packages.dhall sha256:5edc9af74593eab8834d7e324e5868a3d258bbab75c5531d2eb770d4324a2900
 
 let overrides = {=}
 
-let additions = {=}
+let additions =
+      { purescript-graphql-client =
+        { dependencies =
+          [ "affjax"
+          , "effect"
+          , "generics-rep"
+          , "node-fs-aff"
+          , "prelude"
+          , "proxy"
+          , "psci-support"
+          , "record"
+          , "argonaut-core"
+          , "argonaut-codecs"
+          , "argonaut-generic"
+          , "typelevel-prelude"
+          , "debug"
+          , "spec"
+          , "variant"
+          , "protolude"
+          , "web-socket"
+          , "unordered-collection"
+          ]
+        , repo =
+            "https://github.com/purescript-graphql-client/purescript-graphql-client.git"
+        , version = "master"
+        }
+      , either =
+        { dependencies =
+          [ "bifunctors"
+          , "control"
+          , "foldable-traversable"
+          , "invariant"
+          , "maybe"
+          , "prelude"
+          ]
+        , repo = "https://github.com/srghma/purescript-either.git"
+        , version = "patch-1"
+        }
+      , protolude =
+        { dependencies =
+          [ "prelude"
+          , "effect"
+          , "node-fs-aff"
+          , "node-fs"
+          , "node-path"
+          , "either"
+          , "exceptions"
+          , "aff"
+          ]
+        , repo = "https://github.com/srghma/purescript-protolude.git"
+        , version = "master"
+        }
+      , unordered-collection =
+        { dependencies =
+          [ "enums"
+          , "functions"
+          , "integers"
+          , "lists"
+          , "prelude"
+          , "record"
+          , "tuples"
+          , "typelevel-prelude"
+          ]
+        , repo =
+            "https://github.com/fehrenbach/purescript-unordered-collections.git"
+        , version = "master"
+        }
+      }
 
-in  upstream // overrides // additions
+in  upstream ⫽ overrides ⫽ additions

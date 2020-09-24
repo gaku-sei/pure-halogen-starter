@@ -21,7 +21,12 @@ main =
     let
       rootComponent =
         H.hoist
-          (runAppM { globalMessage: "Hello from the Env!", nav })
+          ( runAppM
+              { apiUrl: "https://countries.trevorblades.com"
+              , globalMessage: "Hello from the Env!"
+              , nav
+              }
+          )
           Router.component
     halogenIO <- HA.awaitBody >>= runUI rootComponent unit
     liftEffect $ nav
