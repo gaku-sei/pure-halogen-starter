@@ -4,19 +4,21 @@
   "author": "Kevin COMBRIAT <kevin@sc0ville.com>",
   "license": "MIT",
   "scripts": {
+    "clean": "rimraf output dce-output .spago dist *.lock .cache src/Api dev/styles.css src/Tailwind.purs",
     "start": "parcel dev/index.html",
     "tailwind:generate": "tailwind-generator -l purescript -c ./tailwind.config.js --cssInput ./assets/input.css --cssOutput ./dev/styles.css --output ./src/",
-    "graphql:generate": "rm -fr src/Api && purescript-graphql-client-generator --input-url https://countries.trevorblades.com --output src/Api --api Api",
+    "graphql:generate": "rimraf src/Api && purescript-graphql-client-generator --input-url https://countries.trevorblades.com --output src/Api --api Api",
     "build:purescript": "spago build --purs-args '--codegen corefn'",
     "build:zephyr": "if ! command -v zephyr &> /dev/null; then echo \"zephyr not found, skipping dead code elimination\"; else echo \"Eliminating dead code...\"; zephyr -f Main.main; fi",
     "build:parcel": "parcel build dev/index.html",
-    "build": "yarn tailwind:generate && yarn graphql:generate && yarn build:purescript && yarn build:zephyr && yarn build:parcel"
+    "build": "npm run tailwind:generate && npm run graphql:generate && npm run build:purescript && npm run build:zephyr && npm run build:parcel"
   },
   "dependencies": {},
   "devDependencies": {
     "@scoville/tailwind-generator": "https://github.com/scoville/tailwind-generator",
     "parcel": "^2.0.0-beta.1",
     "purescript-graphql-client": "git+https://github.com/purescript-graphql-client/purescript-graphql-client",
+    "rimraf": "^3.0.2",
     "tailwind": "^4.0.0"
   }
 }
