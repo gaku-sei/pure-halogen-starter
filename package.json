@@ -18,7 +18,7 @@
   "dependencies": {},
   "devDependencies": {
     "@scoville/tailwind-generator": "https://github.com/scoville/tailwind-generator",
-    "parcel": "^2.0.0-beta.1",
+    "parcel": "^1.12.4",
     "purescript-graphql-client": "git+https://github.com/purescript-graphql-client/purescript-graphql-client",
     "rimraf": "^3.0.2",
     "serve": "^11.3.2",

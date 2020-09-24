@@ -2,6 +2,8 @@
 , dependencies =
   [ "console"
   , "effect"
+  , "foreign-generic"
+  , "generics-rep"
   , "halogen"
   , "node-process"
   , "psci-support"
