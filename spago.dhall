@@ -2,13 +2,14 @@
 , dependencies =
   [ "console"
   , "effect"
-  , "psci-support"
   , "halogen"
+  , "node-process"
+  , "psci-support"
+  , "purescript-graphql-client"
   , "random"
+  , "remotedata"
   , "routing"
   , "routing-duplex"
-  , "node-process"
-  , "purescript-graphql-client"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
