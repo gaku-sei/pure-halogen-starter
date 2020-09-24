@@ -5,9 +5,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf output dce-output .spago dist *.lock .cache src/Api assets/styles.css src/Tailwind.purs",
-    "start": "parcel assets/index.html",
+    "start:dev": "parcel assets/index.html",
+    "start:prod": "NODE_ENV=production serve -s dist",
     "tailwind:generate": "tailwind-generator -l purescript -c ./tailwind.config.js --cssInput ./assets/input.css --cssOutput ./assets/styles.css --output ./src/",
     "graphql:generate": "rimraf src/Api && purescript-graphql-client-generator --input-url https://countries.trevorblades.com --output src/Api --api Api",
+    "bootstrap": "npm run tailwind:generate && npm run graphql:generate",
     "build:purescript": "spago build --purs-args '--codegen corefn'",
     "build:zephyr": "if ! command -v zephyr &> /dev/null; then echo \"zephyr not found, skipping dead code elimination\"; else echo \"Eliminating dead code...\"; zephyr -f Main.main; fi",
     "build:parcel": "parcel build assets/index.html",
@@ -19,6 +21,7 @@
     "parcel": "^2.0.0-beta.1",
     "purescript-graphql-client": "git+https://github.com/purescript-graphql-client/purescript-graphql-client",
     "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
     "tailwind": "^4.0.0"
   }
 }
