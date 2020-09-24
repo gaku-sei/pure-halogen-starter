@@ -3,7 +3,6 @@ module Page.Home where
 import Prelude
 import Capability.Navigate (class Navigate)
 import Capability.Random (class Random, rand)
-import Capability.Countries (class Countries)
 import Component.HTML.Utils as HU
 import Component.Link (link)
 import Control.Monad.Reader (class MonadAsk, asks)

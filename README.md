@@ -10,3 +10,7 @@ Here are some of the incoming features:
 
 - Usage with .env files
 - ...
+
+### Dead Code Elimination
+
+The `build` script uses [Zephyr](https://github.com/coot/zephyr) under the hood to minify the JS bundle. If you want to enable DCE you need to install the binary (optional).

@@ -11,9 +11,13 @@
 /.purs*
 /.psa*
 /.spago
+/dce-output/
+
+# Parcel
+/.parcel-cache/
 
 # GraphQL
-/src/Api
+/src/Api/
 
 # Tailwind
 /dev/styles.css
