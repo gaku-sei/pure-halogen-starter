@@ -9,7 +9,7 @@ import Capability.GraphQL (class GraphQL, query)
 import Capability.Navigate (class Navigate)
 import Capability.Random (class Random)
 import Control.Monad.Reader (class MonadAsk, ReaderT, asks, runReaderT)
-import Data.Either (either)
+import Data.Maybe (fromMaybe)
 import Data.Newtype (class Newtype)
 import Data.Route (routeCodec)
 import Effect.Aff (Aff)
@@ -18,6 +18,7 @@ import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Random (randomInt)
 import Env (Env)
 import GraphQLClient (defaultInput, defaultRequestOptions, graphqlMutationRequest, graphqlQueryRequest)
+import Network.RemoteData (fromEither, toMaybe)
 import Routing.Duplex (print)
 import Type.Equality (class TypeEquals, from)
 
@@ -57,13 +58,13 @@ instance navigateAppM :: Navigate AppM where
 instance graphQLAppM :: GraphQL AppM where
   query q = do
     apiUrl <- asks _.apiUrl
-    liftAff $ graphqlQueryRequest apiUrl defaultRequestOptions q
+    liftAff $ fromEither <$> graphqlQueryRequest apiUrl defaultRequestOptions q
   mutation m = do
     apiUrl <- asks _.apiUrl
-    liftAff $ graphqlMutationRequest apiUrl defaultRequestOptions m
+    liftAff $ fromEither <$> graphqlMutationRequest apiUrl defaultRequestOptions m
 
 instance countriesAppM :: Countries AppM where
-  getCountries = either (const []) identity <$> query countries
+  getCountries = fromMaybe [] <<< toMaybe <$> query countries
     where
     countries = Query.countries defaultInput countrySelection
 
